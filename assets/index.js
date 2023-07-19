@@ -1,6 +1,3 @@
-console.log(db_data);
-console.log(db_costs);
-
 Vue.createApp({
     name: "App",
     components: {

@@ -37,8 +37,8 @@ class IndexView(TemplateView):
         return context
 
     def get(self, request, **kwargs):
-        
-        user, _ = User.objects.get_or_create(username='+79122874871') 
-        login(request, user)  
+
+        user, _ = User.objects.get_or_create(username='+79999999999') 
+        # login(request, user)  
         
         return self.render_to_response(self.get_context_data(), **kwargs)

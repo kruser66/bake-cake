@@ -56,9 +56,11 @@
 						<!--метка на иконке, убрать класс d-none чтоб появилась-->
 						<span class="position-absolute translate-middle badge rounded-pill cake__bg_pink fs_8 d-none">1</span>
 					</a>
-					<a class="nav-link fw-lighter cake_grey fs_12 d-none" href="#">
-						Ирина
-					</a>
+					{% if user.is_authenticated %}
+						<a class="nav-link fw-lighter cake_grey fs_12" href="#">
+							{{user.username}}
+						</a>					
+					{% endif %}
 				</li>
 			</ul>
 		</div>
@@ -67,8 +69,6 @@
 </header>
 <main>
 	<div class="container mt-header">
-		{{user.is_authenticated}}
-		{{user}}
 		<aside class="modal fade" id="RegModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="RegModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content px-4 cake__modal">
