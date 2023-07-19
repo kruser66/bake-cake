@@ -1,6 +1,8 @@
 import json
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from django.contrib.auth.models import User
+from django.contrib.auth import login
 
 # Create your views here.
 
@@ -27,10 +29,16 @@ class IndexView(TemplateView):
     template_name = "index.html"
 
     def get_context_data(self, **kwargs):
+
         context = super().get_context_data(**kwargs)
         context["db_costs"] = json.dumps(db_costs)
         context["db_data"] = json.dumps(db_data)
-        
-        print(context)
+ 
         return context
-    
+
+    def get(self, request, **kwargs):
+        
+        user, _ = User.objects.get_or_create(username='+79122874871') 
+        login(request, user)  
+        
+        return self.render_to_response(self.get_context_data(), **kwargs)
