@@ -42,8 +42,6 @@ SECRET_KEY=YOUR_SECRET_KEY
 ALLOWED_HOSTS=YOUR_HOST_NAME_OR_ADDRESS
 ```
 
-```
-
 ### Старт проекта
 
 ```bash
