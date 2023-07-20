@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<main>
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-        {% for cake in cakes %}
-        <div class="col">
-          <div class="card">
-            <img src="{{ cake.img }}" class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title">{{ cake.title }}</h5>
-              <p class="card-text">{{ cake.description }}</p>
-            </div>
-          </div>
+<h1>Каталог вкусных тортов</h1>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for cake in cakes %}
+    <div class="col">
+        <div class="card">
+        <img src="/media/{{ cake.img }}" height="300px" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Торт {{ cake.title }}</h5>
+            <p class="card-text">Категория: {{ cake.category }}</p>
+            <p class="card-text">{{ cake.description }}</p>
+            <p class="card-text">Цена: {{ cake.price }} руб.</p>
+            <button type="button" class="btn btn-primary">В корзину</button>
         </div>
-      </div>
-      {% endfor %}
-</main>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
 {% endblock %}

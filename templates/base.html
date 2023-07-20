@@ -24,7 +24,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 <img src="{% static 'img/Logo.svg' %}" alt="CakeBake">
             </a>
             <div class="collapse navbar-collapse justify-content-end" id="navbar">
@@ -67,8 +67,12 @@
         </nav>
     
     </header>
+    <main>
+        <div class="container mt-header">
         {% block content %}
         {% endblock %}
+        </div>
+    </main>
 
 <footer class="mt-5 cake__bg_blue" id="Contacts">
 	<div class="container my-5 py-5">

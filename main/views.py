@@ -7,7 +7,7 @@ from main.models import OptionType, OptionPrice, Cake
 
 
 def catalog(request):
-    cakes = Cake.objects.all()
+    cakes = Cake.objects.filter(standard=True)
     return render(request, 'catalog.html', {'cakes': cakes})
 
 
