@@ -3,9 +3,13 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib.auth.models import User
 from django.contrib.auth import login
-from main.models import OptionType, OptionPrice
+from main.models import OptionType, OptionPrice, Cake
 
-# Create your views here.
+
+def catalog(request):
+    cakes = Cake.objects.all()
+    return render(request, 'catalog.html', {'cakes': cakes})
+
 
 db_costs = {
     'Levels': [0, 400, 750, 1100],

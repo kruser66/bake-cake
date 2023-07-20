@@ -50,6 +50,11 @@ class Cake(models.Model):
         blank=True
     )
     price = models.PositiveIntegerField(verbose_name='Цена')
+    img = models.ImageField(
+        verbose_name='Картинка',
+        blank=True,
+        null=True
+    )
 
     class Meta:
         verbose_name = 'Торт'
@@ -57,6 +62,9 @@ class Cake(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def str(self):
+        return f'{self.id - {self.title}}'
 
 
 class Order(models.Model):
