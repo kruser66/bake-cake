@@ -3,14 +3,15 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import User
 
 
-class CakeUser(User):
+class CakeUser(models.Model):
     name = models.CharField(verbose_name='Имя', max_length=255)
     phone = PhoneNumberField(
-        'Номер клиента',
+        'Телефон клиента',
         blank=True,
         max_length=20,
     )
     address = models.CharField(verbose_name='Адрес', max_length=255)
+    user = models.OneToOneField(User, verbose_name='User', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Клиент'
