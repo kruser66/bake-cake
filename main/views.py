@@ -1,5 +1,6 @@
 import json
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.generic import TemplateView
 from django.http import HttpResponse, HttpResponseNotModified
 from django.contrib.auth.models import User
@@ -20,6 +21,11 @@ def catalog_detail(request, pk):
 
 def cabinet(request):
     return render(request, 'lk.html')
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('index')
 
 
 def fetch_options_data():
@@ -76,7 +82,7 @@ class IndexView(TemplateView):
                 if base_user_created:
                     user, _ = CakeUser.objects.get_or_create(name=phone, defaults={'user': base_user, 'phone': phone})
                 login(request, base_user)
-                request.session.pop('phone')
+                # request.session.pop('phone')
         # раскомментируйте логаут чтобы выйти из системы (заглушка до реализации логаута)
         # logout(request)
 
