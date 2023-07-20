@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 from main.models import OptionType, OptionPrice, CakeUser, CategoryCake, Cake, Order
 
 
@@ -13,7 +14,6 @@ class OptionTypeAdmin(admin.ModelAdmin):
         OptionPriceInline
     ]
 
-
 @admin.register(CakeUser)
 class CakeUserAdmin(admin.ModelAdmin):
     pass
@@ -26,7 +26,10 @@ class CategoryCakeAdmin(admin.ModelAdmin):
 
 @admin.register(Cake)
 class CakeAdmin(admin.ModelAdmin):
-    pass
+    readonly_fields = ["preview"]
+
+    def preview(self, obj):
+        return mark_safe(f'<img src="{obj.img.url}" style="max-height: 200px;">')
 
 
 @admin.register(Order)
