@@ -3,12 +3,18 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib.auth.models import User
 from django.contrib.auth import login
-from main.models import OptionType, OptionPrice, Cake,CakeUser
+from main.models import OptionType, OptionPrice, Cake, CakeUser, CategoryCake
 
 
 def catalog(request):
     cakes = Cake.objects.filter(standard=True)
     return render(request, 'catalog.html', {'cakes': cakes})
+
+
+def catalog_detail(request, pk):
+    cakes = Cake.objects.filter(standard=True, category=pk)
+    title = CategoryCake.objects.get(pk=pk)
+    return render(request, 'catalog.html', {'cakes': cakes, 'title': title})
 
 
 def cabinet(request):
@@ -37,7 +43,7 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
 
         context = super().get_context_data(**kwargs)
-        
+
         db_costs, db_data = fetch_options_data()
         # для Vue.js
         context["db_costs"] = json.dumps(db_costs)
@@ -45,6 +51,12 @@ class IndexView(TemplateView):
         # для Django templates
         context['prices'] = db_costs
         context['options'] = db_data
+        context['categories'] = CategoryCake.objects.all()
+
+        # categories = CategoryCake.objects.all()
+        # cakes = Cake.objects.all()
+        # for category in categories:
+        #     category.img = random(cakes.get(category=category)).img
 
         return context
 
@@ -55,5 +67,5 @@ class IndexView(TemplateView):
         if base_user_created:
             user, _ = CakeUser.objects.get_or_create(name='+79999999999', defaults={'user': base_user, 'phone': '+79999999999'}) 
         login(request, base_user)  
-        
+ 
         return self.render_to_response(self.get_context_data(), **kwargs)
