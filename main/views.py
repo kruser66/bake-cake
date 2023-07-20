@@ -3,12 +3,16 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.contrib.auth.models import User
 from django.contrib.auth import login
-from main.models import OptionType, OptionPrice, Cake
+from main.models import OptionType, OptionPrice, Cake,CakeUser
 
 
 def catalog(request):
     cakes = Cake.objects.filter(standard=True)
     return render(request, 'catalog.html', {'cakes': cakes})
+
+
+def cabinet(request):
+    return render(request, 'lk.html')
 
 
 def fetch_options_data():
@@ -44,9 +48,12 @@ class IndexView(TemplateView):
 
         return context
 
+
     def get(self, request, **kwargs):
 
-        user, _ = User.objects.get_or_create(username='+79999999999') 
-        # login(request, user)  
+        base_user, base_user_created = User.objects.get_or_create(username='+79999999999')
+        if base_user_created:
+            user, _ = CakeUser.objects.get_or_create(name='+79999999999', defaults={'user': base_user, 'phone': '+79999999999'}) 
+        login(request, base_user)  
         
         return self.render_to_response(self.get_context_data(), **kwargs)

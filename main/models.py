@@ -18,7 +18,7 @@ class CakeUser(models.Model):
         verbose_name_plural = 'Клиенты'
 
     def __str__(self):
-        return self.phone
+        return f'{self.name} - телефон: {self.phone}'
 
 
 class CategoryCake(models.Model):
