@@ -1,8 +1,9 @@
 import json
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from django.http import HttpResponse, HttpResponseNotModified
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from main.models import OptionType, OptionPrice, Cake,CakeUser
 
 
@@ -50,10 +51,18 @@ class IndexView(TemplateView):
 
 
     def get(self, request, **kwargs):
-
-        base_user, base_user_created = User.objects.get_or_create(username='+79999999999')
-        if base_user_created:
-            user, _ = CakeUser.objects.get_or_create(name='+79999999999', defaults={'user': base_user, 'phone': '+79999999999'}) 
-        login(request, base_user)  
-        
+        reg_parameter = request.GET.get('REG')
+        if reg_parameter:
+            step = request.GET.get('STEP')
+            if step == 'phone':
+                request.session['phone'] = reg_parameter
+                return HttpResponseNotModified()
+            elif step == 'code':
+                phone = request.session['phone']
+                base_user, base_user_created = User.objects.get_or_create(username=phone)
+                if base_user_created:
+                    user, _ = CakeUser.objects.get_or_create(name=phone, defaults={'user': base_user, 'phone': phone})
+                login(request, base_user)
+        # раскомментируйте логаут чтобы выйти из системы (заглушка до реализации логаута)
+        # logout(request)
         return self.render_to_response(self.get_context_data(), **kwargs)

@@ -44,12 +44,14 @@ Vue.createApp({
     methods: {
         RegSubmit() {
             if (this.Step === 'Number') {
+                reg_step.value = 'phone'
                 this.$refs.HiddenFormSubmitReg.click()
                 this.Step = 'Code'
                 this.EnteredNumber = this.RegInput
                 this.RegInput = ''
             }
             else {
+                reg_step.value = 'code'
                 this.$refs.HiddenFormSubmitReg.click()
                 this.Step = 'Finish'
                 this.RegInput = 'Регистрация успешна'
@@ -57,7 +59,7 @@ Vue.createApp({
         },
         ToRegStep1() {
             this.Step = 'Number'
-            this.RegInput = this.EnteredNumber
+            this.RegInput1 = this.EnteredNumber
         },
         Reset() {
             this.Step = 'Number'
