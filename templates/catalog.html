@@ -1,18 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{% if title %}
+<h1>Торты категории {{ title }}</h1>
+<title>Торты категории {{ title }}</title>
+{% else %}
 <h1>Каталог вкусных тортов</h1>
+<title>Каталог вкусных тортов</title>
+{% endif %}
 <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for cake in cakes %}
     <div class="col">
         <div class="card">
-        <img src="/media/{{ cake.img }}" height="300px" class="card-img-top" alt="...">
+        <img src="{{ cake.img.url }}" height="300px" class="card-img-top" alt="{{ cake.title }}">
         <div class="card-body">
             <h5 class="card-title">Торт {{ cake.title }}</h5>
             <p class="card-text">Категория: {{ cake.category }}</p>
             <p class="card-text">{{ cake.description }}</p>
             <p class="card-text">Цена: {{ cake.price }} руб.</p>
-            <button type="button" class="btn btn-primary">В корзину</button>
+            <button type="button" class="btn btn-primary">Купить</button>
         </div>
         </div>
     </div>

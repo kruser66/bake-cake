@@ -12,7 +12,7 @@
 	<!-- Для продакшина: -->
 	<!-- <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script> -->
 	<script src="https://unpkg.com/vee-validate"></script>
-	<title>Тортики</title>
+    <title>Тортики</title>
 	<script>
 		var db_costs = {{ db_costs | safe }};
 		var db_data = {{ db_data | safe }};
@@ -30,16 +30,16 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbar">
                 <ul class="navbar-nav">
                     <li class="nav-item me-5">
-                        <a class="nav-link fw-lighter cake_blue" href="#step3">Создать торт</a>
+                        <a class="nav-link fw-lighter cake_blue" href="{% url 'index' %}#step3">Создать торт</a>
                     </li>
                     <li class="nav-item me-5">
                         <a class="nav-link fw-lighter cake_blue" href="{% url 'catalog' %}">Каталог</a>
                     </li>
                     <li class="nav-item me-5">
-                        <a class="nav-link fw-lighter cake_blue" href="#step4">Оплата и доставка</a>
+                        <a class="nav-link fw-lighter cake_blue" href="{% url 'index' %}#step4">Оплата и доставка</a>
                     </li>
                     <li class="nav-item me-5">
-                        <a class="nav-link fw-lighter cake_blue" href="#Contacts">Контакты</a>
+                        <a class="nav-link fw-lighter cake_blue" href="{% url 'index' %}#Contacts">Контакты</a>
                     </li>
                     <li class="nav-item d-block d-xl-flex flex-column align-items-end me-5">
                         <small class="fw-lighter text-decoration-none fs_12 cake_blue">8 (495) 000-00-00</small>
@@ -88,14 +88,14 @@
 				</div>
 			</div>
 			<div class="col-4 col-xl-2 d-flex flex-column">
-				<a href="#" class="text-decoration-none text-white">На свадьбу</a>
-				<a href="#" class="text-decoration-none text-white">На день рождения</a>
-				<a href="#" class="text-decoration-none text-white">На чаепитие</a>
+                {% for category in categories %}
+				<a href="#" class="text-decoration-none text-white">{{ category.name }}</a>
+                {% endfor %}
 			</div>
 			<div class="col-4 col-xl-2 d-flex flex-column">
-				<a href="#step3" class="text-decoration-none text-white">Создать торт</a>
-				<a href="#step2" class="text-decoration-none text-white">Каталог</a>
-				<a href="#Contacts" class="text-decoration-none text-white">Контакты</a>
+				<a href="{% url 'index' %}#step3" class="text-decoration-none text-white">Создать торт</a>
+				<a href="{% url 'catalog' %}" class="text-decoration-none text-white">Каталог</a>
+				<a href="{% url 'index' %}#Contacts" class="text-decoration-none text-white">Контакты</a>
 			</div>
 			<div class="col-12 col-xl-6 d-flex flex-column align-items-start align-items-xl-end mt-3 mt-xl-0">
 				<a href="https://vk.com/devmanorg"><img src="{% static 'img/vk.svg' %}" alt="VK" class="mb-3 mb-xl-5"></a>
