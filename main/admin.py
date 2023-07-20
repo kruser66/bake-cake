@@ -1,6 +1,10 @@
 from django.contrib import admin
-from main.models import OptionType, OptionPrice
+from main.models import OptionType, OptionPrice, CakeUser, CategoryCake, Cake, Order
 
+admin.site.register(CakeUser)
+admin.site.register(CategoryCake)
+admin.site.register(Cake)
+admin.site.register(Order)
 
 class OptionPriceInline(admin.TabularInline):
     model = OptionPrice
