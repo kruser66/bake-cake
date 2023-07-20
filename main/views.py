@@ -76,6 +76,7 @@ class IndexView(TemplateView):
                 if base_user_created:
                     user, _ = CakeUser.objects.get_or_create(name=phone, defaults={'user': base_user, 'phone': phone})
                 login(request, base_user)
+                request.session.pop('phone')
         # раскомментируйте логаут чтобы выйти из системы (заглушка до реализации логаута)
         # logout(request)
 
