@@ -1,4 +1,5 @@
 import json
+import random
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import TemplateView
@@ -24,7 +25,7 @@ def cabinet(request):
 
 
 def delivery(request):
-    return render(request, 'delivery.html')
+    return render(request, 'delivery.html', {'cakes': cakes})
 
 
 def user_logout(request):
@@ -62,12 +63,18 @@ class IndexView(TemplateView):
         # для Django templates
         context['prices'] = db_costs
         context['options'] = db_data
-        context['categories'] = CategoryCake.objects.all()
 
-        # categories = CategoryCake.objects.all()
-        # cakes = Cake.objects.all()
-        # for category in categories:
-        #     category.img = random(cakes.get(category=category)).img
+        categories = CategoryCake.objects.all()
+        cakes = Cake.objects.all()
+        extra_categories = []
+        for category in categories:
+            extra_categories.append({
+                'pk': category.pk,
+                'name': category.name,
+                'img': cakes.filter(category=category).first().img.url
+                }
+            )
+        context['categories'] = extra_categories
 
         return context
 
