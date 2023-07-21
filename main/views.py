@@ -25,7 +25,7 @@ def cabinet(request):
 
 
 def delivery(request):
-    return render(request, 'delivery.html', {'cakes': cakes})
+    return render(request, 'delivery.html')
 
 
 def user_logout(request):
