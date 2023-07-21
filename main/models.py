@@ -7,10 +7,9 @@ class CakeUser(models.Model):
     name = models.CharField(verbose_name='Имя', max_length=255)
     phone = PhoneNumberField(
         'Телефон клиента',
-        blank=True,
         max_length=20,
     )
-    address = models.CharField(verbose_name='Адрес', max_length=255)
+    email = models.EmailField(verbose_name='email', max_length=100, blank=True, null=True)
     user = models.OneToOneField(User, verbose_name='User', on_delete=models.CASCADE)
 
     class Meta:
@@ -47,6 +46,7 @@ class Cake(models.Model):
         CategoryCake,
         verbose_name='Категория',
         on_delete=models.CASCADE,
+        related_name='cakes',
         null=True,
         blank=True
     )
