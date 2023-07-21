@@ -67,7 +67,7 @@
 		<div class="col-12 col-sm-6 col-lg-4 d-flex flex-column align-items-center">
 			<div class="card border-0 cake__hover">
 				<a href="{% url 'catalog_detail' pk=category.pk %}" class="card-img-overlay"></a>
-				<img src="{{ category.img }}" alt="" class="">
+				<img src="{{ category.img }}" alt="" class="" style="max-height: 200px;">
 				<span class="cake_blue mt-4 fw-lighter mb-4 text-center">{{ category.name }}</span>
 			</div>
 		</div>
