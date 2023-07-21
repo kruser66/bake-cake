@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<title>Доставка</title>
+<h1>Доставка</h1>
+Доставка тортиков осуществляется с 10:00 до 23:00. При сумме заказа свыше 5 000 рублей, доставка бесплатная.
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Доставка в пределах МКАД
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+            Минимальная стоимость доставки 600 рублей. Время доставки 1-2 часа. В периоды праздников и вечером время доставки
+            увеличивается до 3-4 часов.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Доставка за МКАД
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+            Минимальная стоимость доставки 900 рублей. Время доставки 2-3 часа. В периоды праздников и вечером время доставки
+            увеличивается до 5-6 часов.
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

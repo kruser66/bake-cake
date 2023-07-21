@@ -23,6 +23,10 @@ def cabinet(request):
     return render(request, 'lk.html')
 
 
+def delivery(request):
+    return render(request, 'delivery.html')
+
+
 def user_logout(request):
     logout(request)
     return redirect('index')
