@@ -20,6 +20,11 @@ def catalog_detail(request, pk):
     return render(request, 'catalog.html', {'cakes': cakes, 'title': title})
 
 
+def footer_categories(request):
+    
+    return {'categories': CategoryCake.objects.all()}
+
+
 def cabinet(request):
     return render(request, 'lk.html')
 
