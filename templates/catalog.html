@@ -14,7 +14,7 @@
             <div class="card">
             <img src="{{ cake.img.url }}" height="300px" class="card-img-top" alt="{{ cake.title }}">
             <div class="card-body">
-                <h5 class="card-title">Торт {{ cake.title }}</h5>
+                <h5 class="card-title">{{ cake.title }}</h5>
                 <p class="card-text">Категория: {{ cake.category|default_if_none:"-" }}</p>
                 <p class="card-text">{{ cake.description }}</p>
                 <p class="card-text">Цена: {{ cake.price }} руб.</p>

@@ -121,15 +121,27 @@ Vue.createApp({
     methods: {
         ToStep4() {
             this.Designed = true
+            var cake_words
+            if (this.Words === '') {
+                cake_words = 'Без надписи'
+            } else {
+                cake_words = this.Words
+            }
+            description = 'Уровней: ' + this.DATA.Levels[this.Levels] + '; форма: ' + this.DATA.Forms[this.Form] +
+                '; топпинг: ' + this.DATA.Toppings[this.Topping] + '; ягоды: ' + this.DATA.Berries[this.Berries] +
+                '; Декор: ' + this.DATA.Decors[this.Decor] + '; ' + cake_words
+            this.Description = description
             setTimeout(() => this.$refs.ToStep4.click(), 0);
         }
     },
     computed: {
         Cost() {
             let W = this.Words ? this.Costs.Words : 0
-            return this.Costs.Levels[this.Levels] + this.Costs.Forms[this.Form] +
+            cost = this.Costs.Levels[this.Levels] + this.Costs.Forms[this.Form] +
                 this.Costs.Toppings[this.Topping] + this.Costs.Berries[this.Berries] +
                 this.Costs.Decors[this.Decor] + W
+            this.price = cost
+            return cost
         }
     }
 }).mount('#VueApp')

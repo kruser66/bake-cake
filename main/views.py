@@ -123,3 +123,10 @@ class IndexView(TemplateView):
         ]
 
         return context
+
+def new_order(request):
+    # вcе данные по торту собранному по конструктору - прилетают (все в POST)
+    # todo запись в БД
+    # todo сообщить на фронт, что все ок, если запись успешна!
+    # todo поймать заказы стандартных тортов
+    return HttpResponseNotModified()
