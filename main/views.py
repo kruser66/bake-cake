@@ -3,7 +3,7 @@ import random
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import TemplateView
-from django.http import HttpResponse, HttpResponseNotModified
+from django.http import HttpResponse, HttpResponseNotModified, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from main.models import OptionType, OptionPrice, Cake, CakeUser, CategoryCake
@@ -61,6 +61,22 @@ def delivery(request):
     return render(request, 'delivery.html')
 
 
+def user_login(request):
+    reg_parameter = request.POST.get('REG')
+    if reg_parameter:
+        step = request.POST.get('STEP')
+        if step == 'phone':
+            request.session['phone'] = reg_parameter
+            return HttpResponseNotModified()
+        elif step == 'code':
+            phone = request.session['phone']
+            base_user, base_user_created = User.objects.get_or_create(username=phone)
+            if base_user_created:
+                CakeUser.objects.create(name=phone, defaults={'user': base_user, 'phone': phone})
+            login(request, base_user)
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
 def user_logout(request):
     logout(request)
     return redirect('index')
@@ -111,19 +127,7 @@ class IndexView(TemplateView):
 
     def get(self, request, **kwargs):
 
-        reg_parameter = request.GET.get('REG')
-        if reg_parameter:
-            step = request.GET.get('STEP')
-            if step == 'phone':
-                request.session['phone'] = reg_parameter
-                return HttpResponseNotModified()
-            elif step == 'code':
-                phone = request.session['phone']
-                base_user, base_user_created = User.objects.get_or_create(username=phone)
-                if base_user_created:
-                    user, _ = CakeUser.objects.get_or_create(name=phone, defaults={'user': base_user, 'phone': phone})
-                login(request, base_user)
-                # request.session.pop('phone')
+        # request.session.pop('phone')
         # раскомментируйте логаут чтобы выйти из системы (заглушка до реализации логаута)
         # logout(request)
 

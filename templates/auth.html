@@ -7,7 +7,8 @@
 			<div class="modal-header border-0 py-0">
 				<label for="reg" class="modal-title font_Gogh fs_40 cake_blue" id="RegModalLabel">Вход / Регистрация</label>
 			</div>
-			<form class="d-none">
+			<form class="d-none" action="{% url 'login' %}" method="post">
+				{% csrf_token %}
 				<input v-model="RegInput" type="text" name="REG">
 				<input type="hidden" name="STEP" id="reg_step">
 				<button type="submit" ref="HiddenFormSubmitReg">reg</button>

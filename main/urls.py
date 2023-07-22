@@ -1,7 +1,7 @@
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
-from main.views import IndexView, catalog, cabinet, catalog_detail, user_logout, delivery
+from main.views import IndexView, catalog, cabinet, catalog_detail, user_logout, delivery, user_login
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
@@ -10,4 +10,5 @@ urlpatterns = [
     path('cabinet/', cabinet, name='cabinet'),
     path('delivery/', delivery, name='delivery'),
     path('logout/', user_logout, name='logout'),
+    path('login/', user_login, name='login'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
