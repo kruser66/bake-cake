@@ -72,7 +72,7 @@ def user_login(request):
             phone = request.session['phone']
             base_user, base_user_created = User.objects.get_or_create(username=phone)
             if base_user_created:
-                CakeUser.objects.create(name=phone, defaults={'user': base_user, 'phone': phone})
+                CakeUser.objects.create(name=phone, user=base_user, phone=phone)
             login(request, base_user)
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
