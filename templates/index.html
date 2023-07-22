@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
+<script>
+	var db_costs = {{ db_costs | safe }};
+	var db_data = {{ db_data | safe }};
+</script>
 <article class="row position-relative">
 	<div class="col-12 col-xxl-6 d-flex justify-content-center">
 		<img src="{% static 'img/Cake.png' %}" alt="">

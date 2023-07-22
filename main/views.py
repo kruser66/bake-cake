@@ -26,9 +26,11 @@ def footer_categories(request):
 
 
 def cabinet(request):
+    
     try:
         client = CakeUser.objects.get(user=request.user)
     except CakeUser.DoesNotExist:
+        # заглушка для admin
         client = CakeUser.objects.create(
             name=request.user.username,
             phone='+70000000000',
@@ -37,6 +39,20 @@ def cabinet(request):
     
     context = {}
     context['orders'] = client.orders.all().order_by('status')
+    context['js_client'] = json.dumps(
+        {
+            'name': client.name,
+            'phone': str(client.phone),
+            'email': client.email,
+        }
+    )
+    
+    if request.method == 'POST':
+        client.name = request.POST.get('NAME')
+        client.phone = request.POST.get('PHONE')
+        client.email = request.POST.get('EMAIL')
+        client.save()
+        
     
     return render(request, 'lk.html', context=context)
 
