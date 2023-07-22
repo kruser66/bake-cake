@@ -26,7 +26,19 @@ def footer_categories(request):
 
 
 def cabinet(request):
-    return render(request, 'lk.html')
+    try:
+        client = CakeUser.objects.get(user=request.user)
+    except CakeUser.DoesNotExist:
+        client = CakeUser.objects.create(
+            name=request.user.username,
+            phone='+70000000000',
+            user=request.user,
+        )
+    
+    context = {}
+    context['orders'] = client.orders.all().order_by('status')
+    
+    return render(request, 'lk.html', context=context)
 
 
 def delivery(request):
