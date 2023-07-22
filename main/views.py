@@ -69,17 +69,14 @@ class IndexView(TemplateView):
         context['prices'] = db_costs
         context['options'] = db_data
 
-        categories = CategoryCake.objects.all()
-        cakes = Cake.objects.all()
-        extra_categories = []
-        for category in categories:
-            extra_categories.append({
+        categories = CategoryCake.objects.prefetch_related('cakes')
+        context['categories'] = [
+            {
                 'pk': category.pk,
                 'name': category.name,
-                'img': cakes.filter(category=category).first().img.url
-                }
-            )
-        context['categories'] = extra_categories
+                'img': category.cakes.all().first().img.url
+            } for category in categories
+        ]
 
         return context
 
