@@ -10,7 +10,7 @@ class CakeUser(models.Model):
         max_length=20,
     )
     email = models.EmailField(verbose_name='email', max_length=100, blank=True, null=True)
-    user = models.OneToOneField(User, verbose_name='User', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, verbose_name='User', on_delete=models.CASCADE, related_name='cake_user')
 
     class Meta:
         verbose_name = 'Клиент'

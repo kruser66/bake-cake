@@ -36,7 +36,13 @@ def cabinet(request):
             phone='+70000000000',
             user=request.user,
         )
-    
+
+    if request.method == 'POST':
+        client.name = request.POST.get('NAME')
+        client.phone = request.POST.get('PHONE')
+        client.email = request.POST.get('EMAIL')
+        client.save()
+
     context = {}
     context['orders'] = client.orders.all().order_by('status')
     context['js_client'] = json.dumps(
@@ -46,13 +52,7 @@ def cabinet(request):
             'email': client.email,
         }
     )
-    
-    if request.method == 'POST':
-        client.name = request.POST.get('NAME')
-        client.phone = request.POST.get('PHONE')
-        client.email = request.POST.get('EMAIL')
-        client.save()
-        
+
     
     return render(request, 'lk.html', context=context)
 
