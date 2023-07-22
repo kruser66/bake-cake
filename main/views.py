@@ -123,12 +123,3 @@ class IndexView(TemplateView):
         ]
 
         return context
-
-
-    def get(self, request, **kwargs):
-
-        # request.session.pop('phone')
-        # раскомментируйте логаут чтобы выйти из системы (заглушка до реализации логаута)
-        # logout(request)
-
-        return self.render_to_response(self.get_context_data(), **kwargs)
