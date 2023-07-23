@@ -1,12 +1,12 @@
 import json
 import random
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import TemplateView
-from django.http import HttpResponse, HttpResponseNotModified, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotModified, HttpResponseRedirect, HttpResponseBadRequest
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
-from main.models import OptionType, OptionPrice, Cake, CakeUser, CategoryCake
+from main.models import OptionType, OptionPrice, Cake, CakeUser, CategoryCake, Order
 
 
 def catalog(request):
@@ -124,9 +124,38 @@ class IndexView(TemplateView):
 
         return context
 
-def new_order(request):
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
+
+
+def new_order(request, cake_id=None):
     # вcе данные по торту собранному по конструктору - прилетают (все в POST)
-    # todo запись в БД
-    # todo сообщить на фронт, что все ок, если запись успешна!
-    # todo поймать заказы стандартных тортов
+    if not cake_id:
+        # индивидуальный торт
+        cake = Cake.objects.create(
+            title='Индивидуальный торт',
+            description=request.POST['DESCR'],
+            standard=False,
+            price=request.POST['PRICE']
+        )
+    else:
+        cake = get_object_or_404(Cake, pk=cake_id)
+    if request.user.is_authenticated and not cake_id:
+        # на фронте сделан запрет на заказ без авторизации. Здесь на всякий случай убеждаемся
+        # но вообще заказ должны иметь возможность сделать и те, кто не зарегистрирован - это здесь не реализовано пока
+        order = Order.objects.create(
+            client=request.user.cake_user,
+            cake=cake,
+            date_delivery=request.POST['DATE'],
+            time_delivery=request.POST['TIME'],
+            comment=request.POST['DELIVCOMMENTS'],
+            address=request.POST['ADDRESS'],
+            customer_name=request.POST['NAME'],
+            customer_phone=request.POST['PHONE'],
+            customer_email=request.POST['EMAIL']
+        )
+    else:
+        # пока не реализован заказ торта из каталога
+        return HttpResponseBadRequest('Заказ торта из каталога не доработан')
     return HttpResponseNotModified()

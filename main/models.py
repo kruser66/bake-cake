@@ -75,6 +75,12 @@ class Order(models.Model):
         verbose_name='Клиент',
         related_name='orders'
     )
+    customer_name = models.CharField(verbose_name='Имя получателя', max_length=255, null=True, blank=True)
+    customer_phone = PhoneNumberField(
+        'Телефон получателя',
+        max_length=20,
+    )
+    customer_email = models.EmailField(verbose_name='email получателя', max_length=100, blank=True, null=True)
     cake = models.ForeignKey(
         Cake,
         on_delete=models.CASCADE,
@@ -94,6 +100,7 @@ class Order(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    address = models.CharField(verbose_name='Адрес доставки', max_length=255)
     status = models.CharField(
         'Статус заказа',
         max_length=20,

@@ -15,18 +15,25 @@
     <title>Тортики</title>
 </head>
 <body>
-    {% include 'header.html' %}
-    <main>
-        <div class="container mt-header">
-          {% include 'auth.html' %}
-          {% block content %}
-          {% endblock %}
-        </div>
-    </main>
-    {% include 'footer.html' %}
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-{% block script %}
-{% endblock %}
+  {% include 'header.html' %}
+  <main>
+      <div class="container mt-header">
+        {% include 'auth.html' %}
+        {% block content %}
+        {% endblock %}
+        {% include 'messages.html' %}
+      </div>
+  </main>
+  {% include 'footer.html' %}
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  {% block script %}
+  {% endblock %}
+  <script>
+    function showMsg(msg_text) {
+      document.getElementById("msg_modal_body").innerHTML = msg_text
+      var msg_modal = new bootstrap.Modal('#msg_modal', {})
+      msg_modal.show()
+    }
+  </script>
 </body>
 </html>

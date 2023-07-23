@@ -12,4 +12,5 @@ urlpatterns = [
     path('logout/', user_logout, name='logout'),
     path('login/', user_login, name='login'),
     path('order/', new_order, name='order'),
+    path('order/<int:cake_id>', new_order, name='order_standart')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -18,7 +18,11 @@
                 <p class="card-text">Категория: {{ cake.category|default_if_none:"-" }}</p>
                 <p class="card-text">{{ cake.description }}</p>
                 <p class="card-text">Цена: {{ cake.price }} руб.</p>
-                <button type="button" class="btn btn-primary">Купить</button>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'order_standart' cake.id %}" class="btn text-white rounded-pill mt-3 shadow-none cake__button cake__bg_pink">Купить</a>
+                {% else %}
+                    <a href="/" onclick="showMsg('Пожалуйста войдите в систему'); return false" class="btn text-white rounded-pill px-5 mt-3 shadow-none cake__button cake__bg_pink">Купить</a>
+                {% endif %}
             </div>
             </div>
         </div>
