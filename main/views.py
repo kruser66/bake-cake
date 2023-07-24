@@ -1,9 +1,10 @@
 import json
 import random
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db import transaction
 from django.urls import reverse
 from django.views.generic import TemplateView
-from django.http import HttpResponse, HttpResponseNotModified, HttpResponseRedirect, HttpResponseBadRequest
+from django.http import HttpResponse, HttpRequest, HttpResponseNotModified, HttpResponseRedirect, HttpResponseBadRequest
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from main.models import OptionType, OptionPrice, Cake, CakeUser, CategoryCake, Order
@@ -53,7 +54,6 @@ def cabinet(request):
         }
     )
 
-    
     return render(request, 'lk.html', context=context)
 
 
@@ -122,6 +122,9 @@ class IndexView(TemplateView):
             } for category in categories
         ]
 
+        if self.kwargs.get('order_registered'):
+            context['order_registered'] = True
+
         return context
 
     def get(self, request, *args, **kwargs):
@@ -129,8 +132,9 @@ class IndexView(TemplateView):
         return self.render_to_response(context)
 
 
-def new_order(request, cake_id=None):
+def new_order(request, id=None):
     # вcе данные по торту собранному по конструктору - прилетают (все в POST)
+    cake_id = request.POST.get('cake_id')
     if not cake_id:
         # индивидуальный торт
         cake = Cake.objects.create(
@@ -144,19 +148,38 @@ def new_order(request, cake_id=None):
     if request.user.is_authenticated and not cake_id:
         # на фронте сделан запрет на заказ без авторизации. Здесь на всякий случай убеждаемся
         # но вообще заказ должны иметь возможность сделать и те, кто не зарегистрирован - это здесь не реализовано пока
-        order = Order.objects.create(
-            client=request.user.cake_user,
-            cake=cake,
-            date_delivery=request.POST['DATE'],
-            time_delivery=request.POST['TIME'],
-            comment=request.POST['DELIVCOMMENTS'],
-            address=request.POST['ADDRESS'],
-            customer_name=request.POST['NAME'],
-            customer_phone=request.POST['PHONE'],
-            customer_email=request.POST['EMAIL'],
-            status='delivery'
-        )
-    else:
-        # пока не реализован заказ торта из каталога
-        return HttpResponseBadRequest('Заказ торта из каталога не доработан')
-    return HttpResponseNotModified()
+        with transaction.atomic():
+            order = Order.objects.create(
+                client=request.user.cake_user,
+                cake=cake,
+                date_delivery=request.POST['DATE'],
+                time_delivery=request.POST['TIME'],
+                comment=request.POST['DELIVCOMMENTS'],
+                address=request.POST['ADDRESS'],
+                customer_name=request.POST['NAME'],
+                customer_phone=request.POST['PHONE'],
+                customer_email=request.POST['EMAIL'],
+                status='delivery'
+            )
+            # костыль для перехода в index_view c сигналом о создании торта
+            # метод меняем потому как Templateview не работает с POST
+            request.method = 'GET'
+            return IndexView.as_view()(request, order_registered=True)
+    elif cake_id:
+        with transaction.atomic():
+            order = Order.objects.create(
+                client=request.user.cake_user,
+                cake=cake,
+                date_delivery=request.POST['date'],
+                time_delivery=request.POST['time'],
+                # comment=request.POST['DELIVCOMMENTS'],
+                address=request.POST['address'],
+                customer_name=request.POST['name'],
+                customer_phone=request.POST['phone'],
+                status='delivery'
+            )
+            # костыль для перехода в index_view c сигналом о создании торта
+            # метод меняем потому как Templateview не работает с POST
+            request.method = 'GET'
+            return IndexView.as_view()(request, order_registered=True)
+    return HttpResponseBadRequest('Заказ могут делать только залогиненные юзеры')

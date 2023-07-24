@@ -1,0 +1,24 @@
+<div class="modal fade" id="order_modal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Данные для заказа</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="order_modal_body">
+          <form  action="{% url 'order' %}" method="post" id="order_form">
+              {% csrf_token %}
+              <input class="form-control my-3 cake__textinput" type="text" id="name" placeholder="Введите имя" name="name">
+              <input class="form-control my-3 cake__textinput" type="text" id="phone" placeholder="Введите номер телефона" name="phone">
+              <input class="form-control my-3 cake__textinput" type="text" id="address" placeholder="Введите адрес" name="address">
+              <input class="form-control my-3 cake__textinput" type="date" id="date" placeholder="Дата доставки ДД.ММ.ГГ" name="date">
+              <input class="form-control my-3 cake__textinput" type="time" id="time" placeholder="время доставки 00:00" name="time">
+              <input  type="hidden" name="cake_id" id="cake_id">
+          </form>
+        </div>
+        <div class="modal-footer">
+        <button type="submit" form="order_form" class="btn text-white rounded-pill px-5 mt-3 shadow-none cake__button cake__bg_pink" data-bs-dismiss="modal">Заказать</button>
+      </div>
+    </div>
+  </div>
+</div>

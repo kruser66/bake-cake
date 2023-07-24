@@ -276,6 +276,9 @@
 	</article>
 {% endblock %}
 {% block script %}
+	{% if order_registered %}
+		<script>window.onload=showMsg('Заказ создан! Созданные заказы вы можете посмотреть в личном кабинете')</script>
+	{% endif %}
 	<script src="{% static 'index.js' %}"></script>
 	<script src="{% static 'registration.js' %}"></script>
 {% endblock %}

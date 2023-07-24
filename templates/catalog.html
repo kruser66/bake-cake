@@ -19,16 +19,24 @@
                 <p class="card-text">{{ cake.description }}</p>
                 <p class="card-text">Цена: {{ cake.price }} руб.</p>
                 {% if user.is_authenticated %}
-                    <a href="{% url 'order_standart' cake.id %}" class="btn text-white rounded-pill mt-3 shadow-none cake__button cake__bg_pink">Купить</a>
+                    <a href="" onclick="set_cake_id({{cake.id}}); return false" class="btn text-white rounded-pill mt-3 shadow-none cake__button cake__bg_pink">Купить</a>
                 {% else %}
-                    <a href="/" onclick="showMsg('Пожалуйста войдите в систему'); return false" class="btn text-white rounded-pill px-5 mt-3 shadow-none cake__button cake__bg_pink">Купить</a>
+                    <a href="" onclick="showMsg('Пожалуйста войдите в систему'); return false" class="btn text-white rounded-pill px-5 mt-3 shadow-none cake__button cake__bg_pink">Купить</a>
                 {% endif %}
             </div>
             </div>
         </div>
     {% endfor %}
     </div>
+    {% include 'order_form.html' %}
 {% endblock %}
 {% block script %}
-	<script src="{% static 'registration.js' %}"></script>
+    <script src="{% static 'registration.js' %}"></script>
+    <script>
+        function set_cake_id(id) {
+            document.getElementById("cake_id").value=id
+            var order_modal = new bootstrap.Modal('#order_modal', {})
+            order_modal.show()
+        }
+    </script>
 {% endblock %}
