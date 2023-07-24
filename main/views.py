@@ -134,7 +134,7 @@ def new_order(request, cake_id=None):
     if not cake_id:
         # индивидуальный торт
         cake = Cake.objects.create(
-            title='Индивидуальный торт',
+            title=f'Индивидуальный торт "{request.POST["WORDS"]}"',
             description=request.POST['DESCR'],
             standard=False,
             price=request.POST['PRICE']
@@ -153,7 +153,8 @@ def new_order(request, cake_id=None):
             address=request.POST['ADDRESS'],
             customer_name=request.POST['NAME'],
             customer_phone=request.POST['PHONE'],
-            customer_email=request.POST['EMAIL']
+            customer_email=request.POST['EMAIL'],
+            status='delivery'
         )
     else:
         # пока не реализован заказ торта из каталога
