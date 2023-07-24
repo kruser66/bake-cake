@@ -44,7 +44,7 @@ def cabinet(request):
         client.save()
 
     context = {}
-    context['orders'] = client.orders.all().order_by('status')
+    context['orders'] = client.orders.all()
     context['js_client'] = json.dumps(
         {
             'name': client.name,

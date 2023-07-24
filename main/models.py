@@ -113,6 +113,7 @@ class Order(models.Model):
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
+        ordering = ['status', '-date_delivery', '-time_delivery']
 
     def __str__(self):
         return f'{self.id} - {self.client} - {self.cake}'
