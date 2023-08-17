@@ -15,6 +15,7 @@ class OptionTypeAdmin(admin.ModelAdmin):
         OptionPriceInline
     ]
 
+
 @admin.register(CakeUser)
 class CakeUserAdmin(admin.ModelAdmin):
     pass

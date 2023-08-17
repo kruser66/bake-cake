@@ -63,7 +63,7 @@ class Cake(models.Model):
 
     def __str__(self):
         return self.title
-    
+
     def str(self):
         return f'{self.id - {self.title}}'
 
@@ -109,7 +109,7 @@ class Order(models.Model):
             ('delivery', 'В доставке')
         ]
     )
-    
+
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
